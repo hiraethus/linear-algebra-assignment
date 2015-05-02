@@ -44,5 +44,21 @@ x = solve(A) %*% b
 x
 @
 
+\subsection*{Draw the row picture of the linear system}
+
+If we express y as a function of x in each of the above equations
+
+\begin{gather}
+f(x) = 7 - 2x \\
+f(x) = \frac{1 - 2x}{3}
+\end{gather}
+
+Then, using the \emph{ggplot2} library, we can plot both of these functions in R.
+
+<<>>=
+library(ggplot2)
+# TODO
+@
+
 
 \end{document}
