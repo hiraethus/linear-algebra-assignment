@@ -1,0 +1,17 @@
+---
+title: "Linear Algebra Assignment"
+author: "Michael J Jones"
+date: "02/05/2015"
+output: html_document
+---
+
+# Row and Column Picture of a linear model
+* solve the following linear system
+
+`2x + y = 7`
+
+`2x + 3y = 1`
+
+* draw the row picture of the linear system
+
+* draw the column picture of the linear system
