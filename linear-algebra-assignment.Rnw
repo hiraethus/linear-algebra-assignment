@@ -188,6 +188,12 @@ summary(prostate.lm)
 \subsection{Question}
 Split the prostate dataset into a test and training dataset (see column 10)
 
+<<>>=
+split.data <- split(prostate.data, prostate.data$train)
+prostate.training <- split.data$T
+prostate.test <- split.data$F
+@
+
 \subsection{Question}
 Predict $lpsa$ for the test example
 
