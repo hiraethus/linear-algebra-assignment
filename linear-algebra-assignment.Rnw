@@ -166,6 +166,14 @@ train/test indicator (column 10)
 
 \subsubsection*{Answer}
 
+<<results=tex>>=
+require(xtable) # install the xtable package if you don't have it
+prostate.data.url <-
+  "http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/prostate.data"
+prostate.data <- read.table(prostate.data.url, head=T)
+xtable(head(prostate.data,3), )
+@
+
 \subsection{Question}
 Estimate and define a linear model using the $lm()$ function.
 
