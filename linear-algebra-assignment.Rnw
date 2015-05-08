@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
 \title{Linear Algebra Assignment}
 \author{Michael J. Jones}
@@ -132,5 +133,56 @@ ggplot(data.frame(x=c(-5, 10)), aes(x)) +
 
 The column picture plainly shows that the combining v1 and v2 in the proportions of $5$ and $-3$ results in 
 observing the vector, $(7,1)'$.
+
+\section{Data}
+All data is available at link \url{http://go.qub.ac.uk/toolkit/regularization}
+
+\section{Linear regression model}
+
+\begin{enumerate}
+\item Download and read the prostate cancer dataset prostate.data into a data matrix. The
+data set is taken from the free online book \emph{The Elements of Statistical Learning} from
+Trevor Hastie, Robert Tibshirani and Jerome Friedman. \\
+\url{http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/prostate.data} \\
+
+\begin{verbatim}
+Prostate data info
+Predictors (columns 1--8)
+lcavol
+lweight
+age
+lbph
+svi
+lcp
+gleason
+pgg45
+
+outcome (column 9)
+
+lpsa
+
+train/test indicator (column 10)
+\end{verbatim}
+
+\item Estimate and define a linear model using the $lm()$ function.
+
+\item Split the prostate dataset into a test and training dataset (see column 10)
+
+\item Predict $lpsa$ for the test examples \\
+
+\begin{verbatim}
+data<-read.table(file="...")
+# split data
+test.data<- ...
+train.data<- ...
+\end{verbatim}
+
+\item Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+
+\item Repeat the analysis using a random forest regression and plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+
+\end{enumerate}
+
+\subsubsection*{Answer}
 
 \end{document}
