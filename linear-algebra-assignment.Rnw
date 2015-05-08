@@ -57,6 +57,7 @@ Then, using the \emph{ggplot2} library, we can plot both of these functions in R
 
 <<fig=TRUE>>=
 library(ggplot2)
+library(grid)
 # TODO
 f.1 <- function(x) 7 - 2*x
 f.2 <- function(x) (1 - 2*x) / 3
@@ -93,9 +94,11 @@ In order to draw our column picture, it helps us to first express our problem as
 % TODO draw the original vectors
 <<fig=TRUE>>=
 ggplot(data.frame(x=c(3, 3)), aes(x)) +
-  geom_segment(aes(x = 0, y = 0, xend = 2, yend = 2)) +
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 3))
-  
+  geom_segment(aes(x = 0, y = 0, xend = 2, yend = 2), arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 3), arrow = arrow(length = unit(0.5, "cm"))) +
+  labs(title="Vectors") +
+  xlab("x") +
+  ylab("y")  
 @
 
 Some combination of $x$ of the first vector and $y$ of the second vector will yield the third vector. Fortunately, 
