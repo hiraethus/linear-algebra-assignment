@@ -177,6 +177,8 @@ xtable(head(prostate.data,3), )
 \subsection{Question}
 Estimate and define a linear model using the $lm()$ function.
 
+\subsubsection*{Answer}
+
 <<print=FALSE>>=
 prostate.lm <- lm(formula = lpsa ~ ., data = prostate.data, method = "qr")
 @
@@ -188,10 +190,15 @@ summary(prostate.lm)
 \subsection{Question}
 Split the prostate dataset into a test and training dataset (see column 10)
 
-<<>>=
+\subsubsection*{Answer}
+
+<<results=tex>>=
 split.data <- split(prostate.data, prostate.data$train)
 prostate.training <- split.data$T
+xtable(head(prostate.training,3), )
+
 prostate.test <- split.data$F
+xtable(head(prostate.test,3), )
 @
 
 \subsection{Question}
@@ -203,6 +210,8 @@ data<-read.table(file="...")
 test.data<- ...
 train.data<- ...
 \end{verbatim}
+
+\subsubsection*{Answer}
 
 \subsection{Question}
 Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
