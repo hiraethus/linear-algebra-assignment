@@ -177,6 +177,14 @@ xtable(head(prostate.data,3), )
 \subsection{Question}
 Estimate and define a linear model using the $lm()$ function.
 
+<<print=FALSE>>=
+prostate.lm <- lm(formula = lpsa ~ ., data = prostate.data, method = "qr")
+@
+
+<<>>=
+summary(prostate.lm)
+@
+
 \subsection{Question}
 Split the prostate dataset into a test and training dataset (see column 10)
 
