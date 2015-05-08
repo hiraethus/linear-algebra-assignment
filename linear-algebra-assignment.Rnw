@@ -139,11 +139,11 @@ All data is available at link \url{http://go.qub.ac.uk/toolkit/regularization}
 
 \section{Linear regression model}
 
-\begin{enumerate}
-\item Download and read the prostate cancer dataset prostate.data into a data matrix. The
+\subsection{Question}
+Download and read the prostate cancer dataset prostate.data into a data matrix. The
 data set is taken from the free online book \emph{The Elements of Statistical Learning} from
 Trevor Hastie, Robert Tibshirani and Jerome Friedman. \\
-\url{http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/prostate.data} \\
+\url{http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/prostate.data}
 
 \begin{verbatim}
 Prostate data info
@@ -164,11 +164,16 @@ lpsa
 train/test indicator (column 10)
 \end{verbatim}
 
-\item Estimate and define a linear model using the $lm()$ function.
+\subsubsection*{Answer}
 
-\item Split the prostate dataset into a test and training dataset (see column 10)
+\subsection{Question}
+Estimate and define a linear model using the $lm()$ function.
 
-\item Predict $lpsa$ for the test examples \\
+\subsection{Question}
+Split the prostate dataset into a test and training dataset (see column 10)
+
+\subsection{Question}
+Predict $lpsa$ for the test example
 
 \begin{verbatim}
 data<-read.table(file="...")
@@ -177,12 +182,11 @@ test.data<- ...
 train.data<- ...
 \end{verbatim}
 
-\item Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+\subsection{Question}
+Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
 
-\item Repeat the analysis using a random forest regression and plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+\subsection{Question}
+Repeat the analysis using a random forest regression and plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
 
-\end{enumerate}
-
-\subsubsection*{Answer}
 
 \end{document}
