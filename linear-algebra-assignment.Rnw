@@ -213,6 +213,26 @@ train.data<- ...
 
 \subsubsection*{Answer}
 
+First, we will define the linear model again using only the training data.
+
+<<>>=
+prostate.lm <- lm(formula = lpsa ~ ., data = prostate.training, method = "qr")
+@
+
+We now need to use \verb@predict@ to predict the the lpsa level using our linear model
+on our test data. Note, we need to exclude the \verb@lpsa@ column from our test data 
+in our prediction.
+
+<<results=tex>>=
+prostate.test.no.label <- subset(prostate.test, select=-lpsa)
+lm.predicted.lpsa <- predict(prostate.lm, prostate.test.no.label)
+@
+
+% TODO - find out why the above keeps giving:
+% Warning message:
+% In predict.lm(prostate.lm, prostate.test.no.label) :
+%   prediction from a rank-deficient fit may be misleading
+
 \subsection{Question}
 Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
 
