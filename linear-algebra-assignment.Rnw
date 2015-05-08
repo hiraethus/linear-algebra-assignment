@@ -98,7 +98,8 @@ ggplot(data.frame(x=c(-5, 10)), aes(x)) +
   geom_segment(colour="red", aes(x = 0, y = 0, xend = 1, yend = 3), arrow = arrow(length = unit(0.5, "cm"))) +
   labs(title="Vectors") +
   xlab("x") +
-  ylab("y")  
+  ylab("y") +
+  geom_text(vjust=-.2, aes(label=c("v1", "v2")), x = c(1, 2), y = c(3,2))
 @
 
 Some combination of $x$ of the first vector and $y$ of the second vector will yield the third vector. Fortunately, 
@@ -106,7 +107,8 @@ we have already discovered when we solved this linear system that $x = 5$ and $y
 first and negative three of the second vectors would add up to give us $(7, 1)'$.
 
 <<fig=TRUE>>=
-ggplot(data.frame(x=c(-5, 10)), aes(x)) +
+ggplot(data.frame(x=c(-5, 10)), aes(x) +
+  scale_x_continuous(limits = c(0, 12)) +
   geom_segment(colour="blue", aes(x = 0, y = 0, xend = 2, yend = 2),
                arrow = arrow(length = unit(0.5, "cm"))) +
   geom_segment(colour="red", aes(x = 0, y = 0, xend = 1, yend = 3),
@@ -121,7 +123,12 @@ ggplot(data.frame(x=c(-5, 10)), aes(x)) +
                arrow = arrow(length = unit(0.5, "cm"))) +
   labs(title="Column Picture") +
   xlab("x") +
-  ylab("y")  
+  ylab("y") +
+  geom_text(vjust=-1,
+            aes(label=c("v1", "v2", "(v1 * 5) + (v2 * -3)","")),
+            x = c(1, 2, 7,0),
+            y = c(3, 2, 1,0))
+
 @
 
 % TODO draw the column picture
