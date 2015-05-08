@@ -93,9 +93,9 @@ In order to draw our column picture, it helps us to first express our problem as
 
 % TODO draw the original vectors
 <<fig=TRUE>>=
-ggplot(data.frame(x=c(3, 3)), aes(x)) +
-  geom_segment(aes(x = 0, y = 0, xend = 2, yend = 2), arrow = arrow(length = unit(0.5, "cm"))) +
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 3), arrow = arrow(length = unit(0.5, "cm"))) +
+ggplot(data.frame(x=c(-5, 10)), aes(x)) +
+  geom_segment(colour="blue", aes(x = 0, y = 0, xend = 2, yend = 2), arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(colour="red", aes(x = 0, y = 0, xend = 1, yend = 3), arrow = arrow(length = unit(0.5, "cm"))) +
   labs(title="Vectors") +
   xlab("x") +
   ylab("y")  
@@ -104,6 +104,25 @@ ggplot(data.frame(x=c(3, 3)), aes(x)) +
 Some combination of $x$ of the first vector and $y$ of the second vector will yield the third vector. Fortunately, 
 we have already discovered when we solved this linear system that $x = 5$ and $y = -3$. This means that five of the 
 first and negative three of the second vectors would add up to give us $(7, 1)'$.
+
+<<fig=TRUE>>=
+ggplot(data.frame(x=c(-5, 10)), aes(x)) +
+  geom_segment(colour="blue", aes(x = 0, y = 0, xend = 2, yend = 2),
+               arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(colour="red", aes(x = 0, y = 0, xend = 1, yend = 3),
+               arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(linetype="dashed", colour="blue",
+               aes(x = 0, y = 0, xend = 2*5, yend = 2*5), 
+               arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(linetype="dashed", colour="red", 
+               aes(x = 2*5, y = 2*5, xend = 2*5 - 3*1, yend = 2*5 - 3 * 3),
+               arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(size=1.5, colour="purple", aes(x = 0, y = 0, xend = 7, yend = 1),
+               arrow = arrow(length = unit(0.5, "cm"))) +
+  labs(title="Column Picture") +
+  xlab("x") +
+  ylab("y")  
+@
 
 % TODO draw the column picture
 \end{document}
