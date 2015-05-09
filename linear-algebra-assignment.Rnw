@@ -195,9 +195,11 @@ Split the prostate dataset into a test and training dataset (see column 10)
 <<results=tex>>=
 split.data <- split(prostate.data, prostate.data$train)
 prostate.training <- split.data$T
+prostate.training <- subset(prostate.training, select=-train)
 xtable(head(prostate.training,3), )
 
 prostate.test <- split.data$F
+prostate.test <- subset(prostate.test, select=-train)
 xtable(head(prostate.test,3), )
 @
 
@@ -230,6 +232,9 @@ lm.predicted.lpsa <- predict(prostate.lm, prostate.test.no.label)
 
 \subsection{Question}
 Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+
+\subsubsection*{Answer}
+
 <<fig=T>>=
 lm.true.vs.predicted <- 
   data.frame(true=prostate.test$lpsa,predicted=lm.predicted.lpsa)
@@ -244,5 +249,41 @@ ggplot(data = lm.true.vs.predicted, aes(true, predicted)) +
 \subsection{Question}
 Repeat the analysis using a random forest regression and plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
 
+\subsubsection*{Answer}
+
+We have already partitioned our data into both training and testing data above. Just as we 
+did with linear regression, we need to perform our regression analysis using Random Forests 
+with the training data.
+
+<<>>=
+library(randomForest)
+num.predictors <- 8
+prostate.rf <- randomForest(lpsa ~ ., data=prostate.training,
+                            mtry=num.predictors / 3, importance=TRUE,
+                            na.action=na.omit)
+
+summary(prostate.rf)
+@
+
+And as performed above, we can predict the values of our test data for $lpsa$
+
+<<>>=
+set.seed(131)
+rf.predicted.lpsa <- predict(prostate.rf, prostate.test.no.label)
+@
+
+and plot these results accordingly.
+
+<<fig=T>>=
+rf.true.vs.predicted <- 
+  data.frame(true=prostate.test$lpsa,predicted=rf.predicted.lpsa)
+
+ggplot(data = rf.true.vs.predicted, aes(true, predicted)) +
+  geom_point() +
+  stat_smooth(method = "lm", col = "red") +
+  ylab(expression(paste("predicted lpsa (", hat(y),')'))) +
+  xlab("true lpsa (y)") +
+  labs(title="Random Forests Regression Model of True against Predicted Values")
+@
 
 \end{document}
