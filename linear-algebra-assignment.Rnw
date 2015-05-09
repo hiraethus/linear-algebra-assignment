@@ -299,7 +299,7 @@ use the function $scale()$
 The coefficients of a linear model can be estimated by
 
 \begin{equation}
-\hat{\beta} = \beta_{0} + \beta_{pred1}x_{1} + \beta_{pred2}x_{2} + \beta_{pred3}x_{3}
+\hat{\beta} = (X^{T} X)^{-1} X^{T} y
 \end{equation}
 
 \pagebreak
@@ -344,6 +344,29 @@ y <- c(16, 8, 19)
 my.lm.coefficients <- my.lm(y, covariates)
 xtable(my.lm.coefficients)
 @
+
+\section{Ridge Regression}
+Write a function to estimate the coefficients using a ridge regression model
+
+\begin{equation}
+\hat{\beta} = (X^{T} X + \lambda I)^{-1} X^{T} y
+\end{equation}
+
+where $I$ is the identity matrix and $\lambda$ the penalty parameter.
+\linebreak
+
+Implement a function that returns the optimal $\lambda$ by a 10 fold cross validation. 
+The function minimizes the prediction error measure (sum of squared error)
+
+\begin{equation}
+MSE = \sum (y - \hat{y})^{2}
+\end{equation}
+
+\verb@rss.error <- sum((test$lpsa-pred)^2)@
+
+Apply your function to the prostate dataset and report the model coefficients and optimal 
+$\lambda$.
+
 
 \end{document}
 
