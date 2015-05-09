@@ -228,14 +228,19 @@ prostate.test.no.label <- subset(prostate.test, select=-lpsa)
 lm.predicted.lpsa <- predict(prostate.lm, prostate.test.no.label)
 @
 
-% TODO - find out why the above keeps giving:
-% Warning message:
-% In predict.lm(prostate.lm, prostate.test.no.label) :
-%   prediction from a rank-deficient fit may be misleading
-
 \subsection{Question}
 Plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
+<<fig=T>>=
+lm.true.vs.predicted <- 
+  data.frame(true=prostate.test$lpsa,predicted=lm.predicted.lpsa)
 
+ggplot(data = lm.true.vs.predicted, aes(true, predicted)) +
+  geom_point() +
+  stat_smooth(method = "lm", col = "red") +
+  ylab(expression(paste("predicted lpsa (", hat(y),')'))) +
+  xlab("true lpsa (y)") +
+  labs(title="Linear Model of True against Predicted Values")
+@
 \subsection{Question}
 Repeat the analysis using a random forest regression and plot your results (true $lpsa$ value $y_{i}$ and predicted $\hat{y}_{i}$).
 
