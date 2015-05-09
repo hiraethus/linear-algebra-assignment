@@ -368,6 +368,19 @@ Apply your function to the prostate dataset and report the model coefficients an
 $\lambda$.
 
 
+\section{Running the code in this document}
+This document was compiled using the \emph{Sweave} extension to R. Sweave is an implementation of the \emph{Literate Programming} paradigm conceived of by Donald Knuth. This allows an author to weave $R$ code and text written in \LaTeX{} together into one document.
+
+To run the code from this document, follow these instructions:
+
+\begin{enumerate}
+\item Open the zipped directory containing this pdf \\
+  (Alternatively, download the whole project from http://github.com/hiraethus/linear-algebra-assignment)
+
+\item Open RStudio and load this project by choosing \verb@File > Open Project@ and navigating to the file \verb@linear-algebra-assignment.Rproj@.
+\item From the file browser in RStudio, choose \verb@linear-algebra-assignment.Rnw@
+\item Use the \verb@chunks@ menu located on the text editor opened in R to run each of the chunks in the file
+\item Run all the code chunks in RStudio by typing \verb@Ctrl + Alt + R@.
+\end{enumerate}
+
 \end{document}
-
-
