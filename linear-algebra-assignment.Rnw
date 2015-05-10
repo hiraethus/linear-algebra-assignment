@@ -405,6 +405,8 @@ MSE = \sum (y - \hat{y})^{2}
 \subsubsection*{Answer}
 
 <<>>=
+set.seed(131)
+
 find.lambda <- function(resp, cova, lambda.start = 1.0,
                         step.size = 0.1, max.steps = 100) {
   result <- list(
@@ -438,8 +440,18 @@ find.lambda <- function(resp, cova, lambda.start = 1.0,
 }
 
 #  calculate rss for a given lambda using 10-fold cross validation
-calc.rss <- function(resp, cova, lambda) {
-  1 - (lambda %% 1)
+calc.rss <- function(resp, cova, lambda, K=10) {
+  N <- length(resp)
+  random.indices <- sample(x = 1:N, size=N, replace=F)
+
+  #list of vectors with indices of folds
+  folds <- split(random.indices, ceiling(1:N/K))
+  print(folds)
+  
+  rss.errors <- lapply(X = folds, FUN=function(test.indices) {
+    training.indices <- random.indices[which(!(random.indices %in% test.indices))]
+  })
+  
 }
 @
 
