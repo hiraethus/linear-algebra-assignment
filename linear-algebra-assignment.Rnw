@@ -446,9 +446,8 @@ calc.rss <- function(resp, cova, lambda, K=10) {
 
   #list of vectors with indices of each fold
   folds <- split(random.indices, ceiling(1:N/K))
-  print(folds)
   
-  rss.errors <- lapply(X = folds, FUN=function(test.indices) {
+  rss.errors <- sapply(X = folds, FUN=function(test.indices) {
     training.indices <- random.indices[which(!(random.indices %in% test.indices))]
     
     training.cova <- cova[training.indices,]
@@ -465,7 +464,6 @@ calc.rss <- function(resp, cova, lambda, K=10) {
     # now calculate rss.error
     sum((test.actual.resp - test.predicted.resp)^2)
   })
-  
   mean(rss.errors)
 }
 @
@@ -475,7 +473,19 @@ Apply your function to the prostate dataset and report the model coefficients an
 $\lambda$.
 
 \subsubsection*{Answer}
+First, let's find the optimal $\lambda$
+<<>>=
+training.cova <- as.matrix(subset(prostate.training, select=-lpsa))
+training.resp <- as.vector(subset(prostate.training, select=lpsa)[,1])
 
+calc.rss(training.resp, training.cova, lambda = 1.1)
+@
+
+Now that we've discoevered that the optimal value of $\lambda$ is ???????, let's calculate the model coefficients
+
+<<>>=
+
+@
 
 \section{Running the code in this document}
 This document was compiled using the \emph{Sweave} extension to R. Sweave is an implementation of the \emph{Literate Programming} paradigm conceived of by Donald Knuth. This allows an author to weave $R$ code and text written in \LaTeX{} together into one document.
