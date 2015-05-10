@@ -346,6 +346,8 @@ xtable(my.lm.coefficients)
 @
 
 \section{Ridge Regression}
+
+\subsection{Question}
 Write a function to estimate the coefficients using a ridge regression model
 
 \begin{equation}
@@ -354,7 +356,9 @@ Write a function to estimate the coefficients using a ridge regression model
 
 where $I$ is the identity matrix and $\lambda$ the penalty parameter.
 \linebreak
+\subsubsection*{Answer}
 
+\subsection{Question}
 Implement a function that returns the optimal $\lambda$ by a 10 fold cross validation. 
 The function minimizes the prediction error measure (sum of squared error)
 
@@ -363,9 +367,13 @@ MSE = \sum (y - \hat{y})^{2}
 \end{equation}
 
 \verb@rss.error <- sum((test$lpsa-pred)^2)@
+\subsubsection*{Answer}
 
+\subsection{Question}
 Apply your function to the prostate dataset and report the model coefficients and optimal 
 $\lambda$.
+
+\subsubsection*{Answer}
 
 
 \section{Running the code in this document}
