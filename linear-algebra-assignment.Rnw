@@ -365,6 +365,9 @@ my.lm.ridge <- function(resp, cova, lambda){
   if (!is.numeric(cova)) errors <- c(errors, "\ncova must be numeric")
   if (!is.vector(resp)) errors <- c(errors,  "\nresp must be a vector")
   if (!is.numeric(resp)) errors <- c(errors, "\nresp must be numeric")
+  if (!is.numeric(lambda)) errors <- c(errors, "\nlambda must be numeric")
+  if (lambda < 1) errors <- c(errors, "\nlambda value must be greater than or equal to 1")
+  
   if (length(errors) > 0) {
     stop(errors)
   }
