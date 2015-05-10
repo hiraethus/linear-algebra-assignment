@@ -366,7 +366,6 @@ my.lm.ridge <- function(resp, cova, lambda){
   if (!is.vector(resp)) errors <- c(errors,  "\nresp must be a vector")
   if (!is.numeric(resp)) errors <- c(errors, "\nresp must be numeric")
   if (!is.numeric(lambda)) errors <- c(errors, "\nlambda must be numeric")
-  if (lambda < 1) errors <- c(errors, "\nlambda value must be greater than or equal to 1")
   
   if (length(errors) > 0) {
     stop(errors)
@@ -478,7 +477,9 @@ First, let's find the optimal $\lambda$
 training.cova <- as.matrix(subset(prostate.training, select=-lpsa))
 training.resp <- as.vector(subset(prostate.training, select=lpsa)[,1])
 
-calc.rss(training.resp, training.cova, lambda = 1.1)
+x <- seq(0, 100, by=0.001)
+plot(x, sapply(x, FUN=function(lambda) calc.rss(training.resp, training.cova, lambda = lambda)),
+     xlab="lambda", ylab="RSS")
 @
 
 Now that we've discoevered that the optimal value of $\lambda$ is ???????, let's calculate the model coefficients
