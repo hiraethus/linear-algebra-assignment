@@ -404,6 +404,45 @@ MSE = \sum (y - \hat{y})^{2}
 \verb@rss.error <- sum((test$lpsa-pred)^2)@
 \subsubsection*{Answer}
 
+<<>>=
+find.lambda <- function(resp, cova, lambda.start = 1.0,
+                        step.size = 0.1, max.steps = 100) {
+  result <- list(
+    lambda = lambda.start,
+    step.size = step.size,
+    steps.to.result = 0
+  )
+  class(result) <- "find.lambda"
+
+  prev.rss.val <- current.rss.val <- calc.rss(resp, cova, result$lambda)
+  prev.lambda <- lambda.start
+
+  repeat {
+    result$steps.to.result <- result$steps.to.result + 1
+    if (result$steps.to.result > max.steps) {
+      stop("Did not converge in maximum number of steps")
+    }
+    
+    # if the rss starts to increase, return lambda
+    if (current.rss.val > prev.rss.val) {
+      result$lambda <- prev.lambda
+      break
+    } else {
+      prev.lambda <- result$lambda
+      result$lambda <- result$lambda + result$step.size
+      current.rss.val <- calc.rss(resp, cova, result$lambda)
+    }
+  }
+  
+  result
+}
+
+#  calculate rss for a given lambda using 10-fold cross validation
+calc.rss <- function(resp, cova, lambda) {
+  1 - (lambda %% 1)
+}
+@
+
 \subsection{Question}
 Apply your function to the prostate dataset and report the model coefficients and optimal 
 $\lambda$.
