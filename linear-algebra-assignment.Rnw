@@ -317,10 +317,10 @@ my.lm <- function(resp, cova){
 
   X <- scale(cova,TRUE,TRUE)
   X <- cbind(1,X)
-  cp <- t(X) %*% X
 
+  cp <- t(X) %*% X
   cp.inv <- solve(cp)
-  beta <- cp.inv %*%t (X) %*% resp
+  beta <- cp.inv %*% t(X) %*% resp
   
   if (!is.null(colnames(cova))) {
     rows <- colnames(cova)
@@ -357,6 +357,38 @@ Write a function to estimate the coefficients using a ridge regression model
 where $I$ is the identity matrix and $\lambda$ the penalty parameter.
 \linebreak
 \subsubsection*{Answer}
+
+<<>>=
+my.lm.ridge <- function(resp, cova, lambda){
+  errors <- c()
+  if (!is.matrix(cova)) errors <- c(errors,  "\ncova must be a matrix")
+  if (!is.numeric(cova)) errors <- c(errors, "\ncova must be numeric")
+  if (!is.vector(resp)) errors <- c(errors,  "\nresp must be a vector")
+  if (!is.numeric(resp)) errors <- c(errors, "\nresp must be numeric")
+  if (length(errors) > 0) {
+    stop(errors)
+  }
+
+  X <- scale(cova,TRUE,TRUE)
+  X <- cbind(1,X)
+
+  cp <- t(X) %*% X
+  I <- diag(nrow=nrow(cp), ncol=ncol(cp))
+  
+  beta <- solve(cp + I*lambda) %*% t(X) %*% resp
+  
+  if (!is.null(colnames(cova))) {
+    rows <- colnames(cova)
+  } else {
+    num.coefs <- ncol(cova)
+    rows <- paste("beta", 1:num.coefs, sep=".")
+  }
+  rownames(beta) <- c("Intercept", rows)
+  colnames(beta) <- "coefs"
+
+  return(beta)
+}
+@
 
 \subsection{Question}
 Implement a function that returns the optimal $\lambda$ by a 10 fold cross validation. 
