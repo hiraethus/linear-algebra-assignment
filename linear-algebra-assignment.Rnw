@@ -320,7 +320,7 @@ my.lm <- function(resp, cova){
 
   cp <- t(X) %*% X
   cp.inv <- solve(cp)
-  beta <- cp.inv %*% t(X) %*% resp
+  beta <- cp.inv %*% (t(X) %*% resp)
   
   if (!is.null(colnames(cova))) {
     rows <- colnames(cova)
@@ -377,7 +377,7 @@ my.lm.ridge <- function(resp, cova, lambda){
   cp <- t(X) %*% X
   I <- diag(nrow=nrow(cp), ncol=ncol(cp))
   
-  beta <- solve(cp + I*lambda) %*% t(X) %*% resp
+  beta <- solve(cp + I*lambda) %*% (t(X) %*% resp)
   
   if (!is.null(colnames(cova))) {
     rows <- colnames(cova)
@@ -455,10 +455,11 @@ calc.rss <- function(resp, cova, lambda, K=10) {
     test.cova <- cova[test.indices,]
     test.actual.resp <- resp[test.indices]
     
-    coefficients <- my.lm.ridge(training.resp, training.cova, lambda)
-    beta0 <- coefficients[1]
-    coefficients.without.beta0 <- coefficients[-1]
-    test.predicted.resp <- (test.cova %*% coefficients.without.beta0) + beta0
+    X <- scale(test.cova)
+    X <- cbind(1, X)
+    
+    beta <- my.lm.ridge(training.resp, training.cova, lambda)
+    test.predicted.resp <- (X %*% beta)
     
     # now calculate rss.error
     sum((test.actual.resp - test.predicted.resp)^2)
@@ -477,9 +478,9 @@ First, let's find the optimal $\lambda$
 training.cova <- as.matrix(subset(prostate.training, select=-lpsa))
 training.resp <- as.vector(subset(prostate.training, select=lpsa)[,1])
 
-x <- seq(0, 100, by=0.001)
+x <- seq(0.1, 10000, by=0.1)
 plot(x, sapply(x, FUN=function(lambda) calc.rss(training.resp, training.cova, lambda = lambda)),
-     xlab="lambda", ylab="RSS")
+     xlab="lambda", ylab="RSS", log="x")
 @
 
 Now that we've discoevered that the optimal value of $\lambda$ is ???????, let's calculate the model coefficients
