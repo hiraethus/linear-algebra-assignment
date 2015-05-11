@@ -1,4 +1,4 @@
-# Running the code in this document}
+# Running the code in this document
 This document was compiled using the *Sweave* extension to R.
 Sweave is an implementation of the *Literate Programming*
 paradigm conceived of by Donald Knuth. This allows an author to weave `R`
