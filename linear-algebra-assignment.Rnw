@@ -404,38 +404,42 @@ MSE = \sum (y - \hat{y})^{2}
 \subsubsection*{Answer}
 
 <<>>=
-set.seed(131)
+find.lambda <- function(resp, cova, lambda.start = 0.1,
+                        step.size = 0.1, lambda.stop = 1) {
+  max.lambda.count <- 100
+  
+  lambda.vals <- seq(from = lambda.start, to = lambda.stop, by = step.size)
+  if (length(lambda.vals) > max.lambda.count) {
+    stop(paste("Too many possible lambda values. Make lambda.start",
+               "and lambda.stop closer or make step size larger."))
+  }
+  rss.errors <- vector(mode = "numeric", length = length(lambda.vals))
 
-find.lambda <- function(resp, cova, lambda.start = 1.0,
-                        step.size = 0.1, max.steps = 100) {
-  result <- list(
-    lambda = lambda.start,
-    step.size = step.size,
-    steps.to.result = 0
-  )
-  class(result) <- "find.lambda"
-
-  prev.rss.val <- current.rss.val <- calc.rss(resp, cova, result$lambda)
-  prev.lambda <- lambda.start
-
-  repeat {
-    result$steps.to.result <- result$steps.to.result + 1
-    if (result$steps.to.result > max.steps) {
-      stop("Did not converge in maximum number of steps")
-    }
-    
-    # if the rss starts to increase, return lambda
-    if (current.rss.val > prev.rss.val) {
-      result$lambda <- prev.lambda
-      break
-    } else {
-      prev.lambda <- result$lambda
-      result$lambda <- result$lambda + result$step.size
-      current.rss.val <- calc.rss(resp, cova, result$lambda)
-    }
+  for (i in 1:length(lambda.vals)) {
+    curr.lambda <- lambda.vals[i]
+    rss.errors[i] <- calc.rss(resp, cova, curr.lambda)
   }
   
+  index.of.least.rss <- which.min(rss.errors)
+  optimal.lambda <- lambda.vals[index.of.least.rss]
+  coefficients <- my.lm.ridge(resp, cova, optimal.lambda)
+  
+  result <- list(
+    optimal.lambda = optimal.lambda,
+    model.coefficients = coefficients
+  )
+  class(result) <- "find.lambda"
+  
   result
+}
+
+print.find.lambda <- function(find.lambda) {
+  cat("Optimal lambda:",
+      find.lambda$optimal.lambda,
+      "",
+      "Coefficients",
+      find.lambda$model.coefficients,
+      sep="\n")
 }
 
 #  calculate rss for a given lambda using 10-fold cross validation
@@ -473,20 +477,16 @@ Apply your function to the prostate dataset and report the model coefficients an
 $\lambda$.
 
 \subsubsection*{Answer}
-First, let's find the optimal $\lambda$
-<<>>=
-training.cova <- as.matrix(subset(prostate.training, select=-lpsa))
-training.resp <- as.vector(subset(prostate.training, select=lpsa)[,1])
-
-x <- seq(0.1, 10000, by=0.1)
-plot(x, sapply(x, FUN=function(lambda) calc.rss(training.resp, training.cova, lambda = lambda)),
-     xlab="lambda", ylab="RSS", log="x")
-@
-
-Now that we've discoevered that the optimal value of $\lambda$ is ???????, let's calculate the model coefficients
 
 <<>>=
+set.seed(131)
 
+total.prostate.data <- subset(prostate.data, select=-train)
+total.prostate.resp <- as.vector(subset(total.prostate.data, select=lpsa)[,1])
+total.prostate.cova <- as.matrix(subset(total.prostate.data, select=-lpsa))
+
+find.lambda(total.prostate.resp, total.prostate.cova,
+            lambda.start = 0.1, step.size = 0.02, lambda.stop = 2)
 @
 
 \section{Running the code in this document}
